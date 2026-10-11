@@ -10,6 +10,13 @@ const successCopy = document.querySelector("#success-copy");
 const summarySize = document.querySelector("#summary-size");
 let selectedSize = "";
 let previouslyFocused = null;
+const mainProductPhoto = document.querySelector("#main-product-photo");
+const defaultProductPhoto = {
+  src: mainProductPhoto.getAttribute("src"),
+  alt: mainProductPhoto.alt,
+};
+const galleryReset = document.querySelector("#gallery-reset");
+const photoButtons = [...document.querySelectorAll(".thumbnail-select[data-photo]")];
 
 sizeButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -19,6 +26,22 @@ sizeButtons.forEach((button) => {
     sizeHelp.textContent = `Taille ${selectedSize} sélectionnée.`;
     summarySize.textContent = `· Taille ${selectedSize}`;
   });
+});
+
+photoButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    mainProductPhoto.src = button.dataset.photo;
+    mainProductPhoto.alt = button.dataset.alt || "Pantalon baggy indigo foncé";
+    photoButtons.forEach((photoButton) => photoButton.setAttribute("aria-pressed", String(photoButton === button)));
+    galleryReset.hidden = false;
+  });
+});
+
+galleryReset.addEventListener("click", () => {
+  mainProductPhoto.src = defaultProductPhoto.src;
+  mainProductPhoto.alt = defaultProductPhoto.alt;
+  photoButtons.forEach((button) => button.setAttribute("aria-pressed", "false"));
+  galleryReset.hidden = true;
 });
 
 function openModal() {
