@@ -32,6 +32,7 @@ const staticFiles = new Map([
   ["/product-03.jpeg", "product-03.jpeg"],
   ["/product-04.jpeg", "product-04.jpeg"],
   ["/product-05.jpeg", "product-05.jpeg"],
+  ["/product-06.jpeg", "product-06.jpeg"],
   ["/favicon.ico", "brandmark.svg"],
 ]);
 const mimeTypes = {
