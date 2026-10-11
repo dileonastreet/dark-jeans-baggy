@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0c0d0e" />
-    <meta name="description" content="Dark Indigo Baggy Jeans — le denim DILEONASTREET, à 250 DH. Paiement à la livraison." />
+    <meta name="description" content="Dark Indigo Baggy Jeans — le pantalon DILEONASTREET, à 250 DH. Paiement à la livraison." />
     <title>Dark Indigo Baggy Jeans — DILEONASTREET</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles.css" />
-    <script src="/app.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
   </head>
   <body>
     <header class="site-header" id="top">
@@ -19,9 +19,9 @@
       </button>
       <nav class="header-links header-links-left" aria-label="Navigation principale">
         <a href="#produit">SHOP</a>
-        <a href="#details">DENIM</a>
+        <a href="#details">JEANS</a>
       </nav>
-      <a class="wordmark" href="#top" aria-label="DILEONASTREET, accueil">DILEONASTREET<span class="wordmark-slash" aria-hidden="true"></span></a>
+      <a class="wordmark" href="#top" aria-label="DILEONASTREET, accueil">DILEONASTREET</a>
       <nav class="header-links header-links-right" aria-label="Collections">
         <a href="#details">STREETWEAR</a>
         <a class="cart-link" href="#commande-info">PANIER <span class="cart-dot" aria-hidden="true"></span></a>
@@ -29,32 +29,32 @@
       <div class="menu-panel" id="site-menu" hidden>
         <a href="#produit">Le produit</a>
         <a href="#histoire">Notre histoire</a>
-        <a href="#details">Détails du denim</a>
+        <a href="#details">Détails du pantalon</a>
       </div>
     </header>
 
     <main>
       <section class="product-layout page-shell" id="produit" aria-labelledby="product-title">
-        <div class="gallery" aria-label="Galerie du produit avec six emplacements photo vides">
+        <div class="gallery" aria-label="Galerie de photographies du produit">
           <div class="gallery-main">
-            <div class="photo-slot photo-slot-main" role="img" aria-label="Emplacement photo 1 sur 6, vide">
-              <span class="image-index">01 / 06</span>
+            <div class="photo-slot photo-slot-main">
+              <img id="main-product-photo" src="./product-main.jpeg" alt="Pantalon baggy indigo foncé porté par un modèle" fetchpriority="high" />
             </div>
           </div>
-          <div class="gallery-thumbnails" aria-label="Cinq emplacements photo supplémentaires, vides">
-            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo 2 sur 6, vide"><span class="photo-slot-number">02</span></div>
-            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo 3 sur 6, vide"><span class="photo-slot-number">03</span></div>
-            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo 4 sur 6, vide"><span class="photo-slot-number">04</span></div>
-            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo 5 sur 6, vide"><span class="photo-slot-number">05</span></div>
-            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo 6 sur 6, vide"><span class="photo-slot-number">06</span></div>
+          <div class="gallery-thumbnails" role="group" aria-label="Photos supplémentaires du produit">
+            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo supplémentaire, vide"></div>
+            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo supplémentaire, vide"></div>
+            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo supplémentaire, vide"></div>
+            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo supplémentaire, vide"></div>
+            <div class="thumbnail photo-slot" role="img" aria-label="Emplacement photo supplémentaire, vide"></div>
           </div>
         </div>
 
         <div class="product-info">
-          <div class="eyebrow collection-label">DENIM COLLECTION <span class="short-rule"></span></div>
+          <div class="eyebrow collection-label">INDIGO COLLECTION <span class="short-rule"></span></div>
           <p class="brand-line">DILEONASTREET <span aria-hidden="true">—</span></p>
           <h1 id="product-title">Dark Indigo<br />Baggy Jeans</h1>
-          <p class="product-subtitle">DENIM INDIGO FONCÉ / COUPE AMPLE</p>
+          <p class="product-subtitle">INDIGO FONCÉ / COUPE AMPLE</p>
           <div class="price-row"><strong class="price">250 DH</strong><span class="delivery-note">PAIEMENT À LA LIVRAISON</span></div>
 
           <fieldset class="size-selector">
@@ -76,12 +76,12 @@
       <section class="product-story page-shell" id="histoire" aria-labelledby="story-title">
         <div class="story-intro">
           <p class="eyebrow">HISTOIRE DU PRODUIT</p>
-          <h2 id="story-title">Le denim, au cœur du vestiaire.</h2>
-          <p>Ce pantalon a été conçu pour devenir la pièce incontournable de votre garde-robe streetwear. Il associe le caractère intemporel d’un denim indigo foncé à une coupe baggy ample, pour un confort optimal et une liberté de mouvement totale, sans jamais renoncer au style ni à la modernité.</p>
+          <h2 id="story-title">Une pièce au cœur du vestiaire.</h2>
+          <p>Ce pantalon a été conçu pour devenir la pièce incontournable de votre garde-robe streetwear. Sa teinte indigo profonde s’associe à une coupe baggy ample, pour un confort optimal et une liberté de mouvement totale, sans jamais renoncer au style ni à la modernité.</p>
         </div>
         <div class="details-heading"><p class="eyebrow">CARACTÉRISTIQUES ET DÉTAILS</p><span>04 POINTS CLÉS</span></div>
         <div class="feature-grid" id="details">
-          <article class="feature-card"><span class="feature-number">01</span><h3>DENIM ÉPAIS</h3><p>Confectionné dans un denim de coton épais et de qualité, qui préserve la tenue et la belle structure du pantalon tout en restant agréable à porter au quotidien.</p></article>
+          <article class="feature-card"><span class="feature-number">01</span><h3>TISSU ÉPAIS</h3><p>Confectionné dans un coton épais et de qualité, qui préserve la tenue et la belle structure du pantalon tout en restant agréable à porter au quotidien.</p></article>
           <article class="feature-card"><span class="feature-number">02</span><h3>COUPE BAGGY</h3><p>Une ampleur équilibrée de la taille jusqu’aux chevilles, pour un tombé fluide qui s’accorde parfaitement avec vos sneakers.</p></article>
           <article class="feature-card"><span class="feature-number">03</span><h3>COUTURES &amp; FINITIONS</h3><p>Des surpiqûres contrastantes apparentes renforcent la résistance du pantalon et mettent en valeur les poches ainsi que les découpes géométriques.</p></article>
           <article class="feature-card"><span class="feature-number">04</span><h3>FINITION INDIGO FONCÉ</h3><p>Une teinte riche et profonde qui apporte une touche élégante et s’associe facilement à une grande variété de couleurs et de hauts.</p></article>
@@ -91,7 +91,7 @@
 
     <footer class="site-footer page-shell">
       <a class="footer-wordmark" href="#top">DILEONASTREET</a>
-      <p>DARK INDIGO · STREETWEAR DENIM</p>
+      <p>DARK INDIGO · STREETWEAR</p>
       <span>© <span id="year"></span> DILEONASTREET</span>
     </footer>
 
@@ -102,6 +102,7 @@
         <p id="dialog-description" class="dialog-description">Dark Indigo Baggy Jeans · 250 DH <span id="summary-size">· Taille —</span></p>
         <form id="order-form" novalidate>
           <div class="form-grid">
+            <div class="honeypot" aria-hidden="true"><label for="website-field">Website</label><input id="website-field" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
             <label class="field">NOM<input name="lastName" autocomplete="family-name" required minlength="2" placeholder="Votre nom" /></label>
             <label class="field">PRÉNOM<input name="firstName" autocomplete="given-name" required minlength="2" placeholder="Votre prénom" /></label>
             <label class="field">NUMÉRO DE TÉLÉPHONE<input name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="[+0-9() .-]{8,20}" placeholder="06 00 00 00 00" /></label>
@@ -117,15 +118,16 @@
             </label>
           </div>
           <p class="form-error" id="form-error" role="alert" hidden></p>
-          <button class="order-button modal-submit" type="submit">CONFIRMER MA COMMANDE</button>
+          <button class="order-button modal-submit" id="submit-order" type="submit">CONFIRMER MA COMMANDE</button>
           <p class="payment-caption">PAIEMENT À LA LIVRAISON</p>
+          <p class="order-disclosure">Vos coordonnées sont utilisées uniquement pour traiter et livrer votre commande.</p>
         </form>
         <div class="success-message" id="success-message" role="status" hidden>
           <span class="success-mark" aria-hidden="true">✓</span>
-          <h3>Votre demande est prête.</h3>
+          <h3>Commande enregistrée.</h3>
           <p id="success-copy"></p>
           <button class="text-button" id="finish-order" type="button">FERMER</button>
-          <p class="privacy-note">Démo uniquement : aucune donnée n’est envoyée à un service externe.</p>
+          <p class="privacy-note">Vos coordonnées sont utilisées pour traiter votre commande.</p>
         </div>
       </section>
     </div>

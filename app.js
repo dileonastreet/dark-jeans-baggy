@@ -73,7 +73,7 @@ function clearError(event) {
 orderForm.addEventListener("input", clearError);
 orderForm.addEventListener("change", clearError);
 
-orderForm.addEventListener("submit", (event) => {
+orderForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   errorMessage.hidden = true;
   const fields = [...orderForm.querySelectorAll("input, select")];
@@ -93,9 +93,43 @@ orderForm.addEventListener("submit", (event) => {
   const firstName = String(formData.get("firstName")).trim();
   const lastName = String(formData.get("lastName")).trim();
   const city = String(formData.get("city"));
-  successCopy.textContent = `Merci ${firstName} ${lastName}. Votre demande pour le Dark Indigo Baggy Jeans (taille ${selectedSize}, 250 DH) à livrer à ${city} est prête. Cette démo n’envoie pas vos informations.`;
-  orderForm.hidden = true;
-  successMessage.hidden = false;
+  const submitButton = orderForm.querySelector("#submit-order");
+  const submitLabel = "CONFIRMER MA COMMANDE";
+  const payload = {
+    firstName,
+    lastName,
+    phone: String(formData.get("phone")).trim(),
+    address: String(formData.get("address")).trim(),
+    city,
+    size: selectedSize,
+    website: String(formData.get("website") || "").trim(),
+  };
+
+  submitButton.disabled = true;
+  submitButton.classList.add("is-loading");
+  submitButton.textContent = "ENVOI EN COURS…";
+  try {
+    const response = await fetch("/api/orders", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (response.status !== 200 || result.ok !== true || typeof result.orderId !== "string") {
+      throw new Error("Order could not be saved");
+    }
+
+    const orderReference = result.orderId.slice(0, 8).toUpperCase();
+    successCopy.textContent = `Merci ${firstName} ${lastName}. Votre commande #${orderReference} pour le Dark Indigo Baggy Jeans (taille ${selectedSize}, 250 DH), à livrer à ${city}, est enregistrée.`;
+    orderForm.hidden = true;
+    successMessage.hidden = false;
+  } catch {
+    showError("Impossible d’enregistrer la commande pour le moment. Vos informations sont conservées dans le formulaire ; veuillez réessayer.");
+  } finally {
+    submitButton.disabled = false;
+    submitButton.classList.remove("is-loading");
+    submitButton.textContent = submitLabel;
+  }
 });
 
 document.querySelector("#year").textContent = String(new Date().getFullYear());
