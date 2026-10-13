@@ -108,15 +108,7 @@
             <label class="field">PRÉNOM<input name="firstName" autocomplete="given-name" required minlength="2" placeholder="Votre prénom" /></label>
             <label class="field">NUMÉRO DE TÉLÉPHONE<input name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="[+0-9() .-]{8,20}" placeholder="06 00 00 00 00" /></label>
             <label class="field">ADRESSE<input name="address" autocomplete="street-address" required minlength="5" placeholder="Adresse de livraison" /></label>
-            <label class="field">VILLE
-              <select name="city" autocomplete="address-level2" required>
-                <option value="" selected disabled>Choisir une ville</option>
-                <option>Agadir</option><option>Béni Mellal</option><option>Casablanca</option><option>Dakhla</option>
-                <option>El Jadida</option><option>Fès</option><option>Khouribga</option><option>Kénitra</option>
-                <option>Laâyoune</option><option>Marrakech</option><option>Meknès</option><option>Nador</option>
-                <option>Oujda</option><option>Rabat</option><option>Safi</option><option>Tanger</option><option>Tétouan</option>
-              </select>
-            </label>
+            <label class="field">VILLE<input name="city" type="text" autocomplete="address-level2" required maxlength="80" placeholder="Votre ville" /></label>
           </div>
           <p class="form-error" id="form-error" role="alert" hidden></p>
           <button class="order-button modal-submit" id="submit-order" type="submit">CONFIRMER MA COMMANDE</button>

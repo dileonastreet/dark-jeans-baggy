@@ -15,11 +15,6 @@ const orderHeaders = [
   "المدينة", "المقاس", "المنتج", "السعر (DH)", "حالة الطلب", "ملاحظات",
 ];
 const allowedSizes = new Set(["31", "33", "34", "36"]);
-const allowedCities = new Set([
-  "Agadir", "Béni Mellal", "Casablanca", "Dakhla", "El Jadida", "Fès",
-  "Khouribga", "Kénitra", "Laâyoune", "Marrakech", "Meknès", "Nador",
-  "Oujda", "Rabat", "Safi", "Tanger", "Tétouan",
-]);
 const staticFiles = new Map([
   ["/", "index.html"],
   ["/index.html", "index.html"],
@@ -109,7 +104,7 @@ function buildOrder(body) {
   if (!firstName || !lastName || !address || !phone || !city || !size) return null;
   const digits = phone.replace(/\D/g, "").length;
   if (!/^[+0-9() .-]{8,20}$/.test(phone) || digits < 9 || digits > 15) return null;
-  if (!allowedCities.has(city) || !allowedSizes.has(size)) return null;
+  if (!allowedSizes.has(size)) return null;
 
   return {
     orderId: randomUUID(),

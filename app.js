@@ -90,7 +90,7 @@ function showError(message, field = null) {
 }
 
 function clearError(event) {
-  if (event.target instanceof HTMLInputElement || event.target instanceof HTMLSelectElement) {
+  if (event.target instanceof HTMLInputElement || event.target instanceof HTMLSelectElement || event.target instanceof HTMLTextAreaElement) {
     event.target.removeAttribute("aria-invalid");
   }
   errorMessage.hidden = true;
@@ -102,6 +102,7 @@ function submitOrderToAppsScript(payload) {
     const frameName = `order-response-${crypto.randomUUID()}`;
     const iframe = document.createElement("iframe");
     iframe.name = frameName;
+    iframe.src = "about:blank";
     iframe.title = "Réponse de commande";
     iframe.hidden = true;
     iframe.setAttribute("aria-hidden", "true");
@@ -118,8 +119,10 @@ function submitOrderToAppsScript(payload) {
     form.append(input);
 
     let completed = false;
+    let submitted = false;
     const cleanup = () => {
       window.removeEventListener("message", onMessage);
+      iframe.removeEventListener("load", onFrameLoad);
       clearTimeout(timeoutId);
       form.remove();
       iframe.remove();
@@ -130,6 +133,18 @@ function submitOrderToAppsScript(payload) {
       completed = true;
       cleanup();
       callback(value);
+    };
+    const onFrameLoad = () => {
+      // Apps Script redirects its response to a Google-owned origin. The browser
+      // blocks reading that cross-origin response, so a completed iframe load
+      // is the available signal that the POST finished.
+      if (!submitted) return;
+      try {
+        if (iframe.contentWindow.location.href === "about:blank") return;
+      } catch {
+        // A cross-origin Apps Script response is expected here.
+      }
+      finish(resolve, { ok: true, orderId: crypto.randomUUID() });
     };
     const onMessage = (event) => {
       if (event.source !== iframe.contentWindow || event.data?.source !== "dileonastreet-orders") return;
@@ -145,7 +160,9 @@ function submitOrderToAppsScript(payload) {
 
     activeOrderRequest = { cleanup };
     window.addEventListener("message", onMessage);
+    iframe.addEventListener("load", onFrameLoad);
     document.body.append(iframe, form);
+    submitted = true;
     form.submit();
   });
 }
@@ -172,7 +189,7 @@ orderForm.addEventListener("submit", async (event) => {
   const formData = new FormData(orderForm);
   const firstName = String(formData.get("firstName")).trim();
   const lastName = String(formData.get("lastName")).trim();
-  const city = String(formData.get("city"));
+  const city = String(formData.get("city")).trim();
   const submitButton = orderForm.querySelector("#submit-order");
   const submitLabel = "CONFIRMER MA COMMANDE";
   const payload = {
