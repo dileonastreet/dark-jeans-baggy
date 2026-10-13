@@ -119,10 +119,8 @@ function submitOrderToAppsScript(payload) {
     form.append(input);
 
     let completed = false;
-    let submitted = false;
     const cleanup = () => {
       window.removeEventListener("message", onMessage);
-      iframe.removeEventListener("load", onFrameLoad);
       clearTimeout(timeoutId);
       form.remove();
       iframe.remove();
@@ -133,18 +131,6 @@ function submitOrderToAppsScript(payload) {
       completed = true;
       cleanup();
       callback(value);
-    };
-    const onFrameLoad = () => {
-      // Apps Script redirects its response to a Google-owned origin. The browser
-      // blocks reading that cross-origin response, so a completed iframe load
-      // is the available signal that the POST finished.
-      if (!submitted) return;
-      try {
-        if (iframe.contentWindow.location.href === "about:blank") return;
-      } catch {
-        // A cross-origin Apps Script response is expected here.
-      }
-      finish(resolve, { ok: true, orderId: crypto.randomUUID() });
     };
     const onMessage = (event) => {
       if (event.source !== iframe.contentWindow || event.data?.source !== "dileonastreet-orders") return;
@@ -160,9 +146,7 @@ function submitOrderToAppsScript(payload) {
 
     activeOrderRequest = { cleanup };
     window.addEventListener("message", onMessage);
-    iframe.addEventListener("load", onFrameLoad);
     document.body.append(iframe, form);
-    submitted = true;
     form.submit();
   });
 }
