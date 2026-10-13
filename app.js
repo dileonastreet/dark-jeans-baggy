@@ -8,6 +8,8 @@ const errorMessage = document.querySelector("#form-error");
 const successMessage = document.querySelector("#success-message");
 const successCopy = document.querySelector("#success-copy");
 const summarySize = document.querySelector("#summary-size");
+const ordersApiUrl = "https://script.google.com/macros/s/AKfycbw0zld2vpdLWhPW5HYaiX8nTC04FyI10DLfXAtZ-4-z9A_-JCNUM64tm8bs6XecSI1l/exec";
+let activeOrderRequest = null;
 let selectedSize = "";
 let previouslyFocused = null;
 const mainProductPhoto = document.querySelector("#main-product-photo");
@@ -93,6 +95,61 @@ function clearError(event) {
   }
   errorMessage.hidden = true;
 }
+
+function submitOrderToAppsScript(payload) {
+  if (activeOrderRequest) return Promise.reject(new Error("Order request already in progress"));
+  return new Promise((resolve, reject) => {
+    const frameName = `order-response-${crypto.randomUUID()}`;
+    const iframe = document.createElement("iframe");
+    iframe.name = frameName;
+    iframe.title = "Réponse de commande";
+    iframe.hidden = true;
+    iframe.setAttribute("aria-hidden", "true");
+
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = ordersApiUrl;
+    form.target = frameName;
+    form.hidden = true;
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "payload";
+    input.value = JSON.stringify(payload);
+    form.append(input);
+
+    let completed = false;
+    const cleanup = () => {
+      window.removeEventListener("message", onMessage);
+      clearTimeout(timeoutId);
+      form.remove();
+      iframe.remove();
+      activeOrderRequest = null;
+    };
+    const finish = (callback, value) => {
+      if (completed) return;
+      completed = true;
+      cleanup();
+      callback(value);
+    };
+    const onMessage = (event) => {
+      if (event.source !== iframe.contentWindow || event.data?.source !== "dileonastreet-orders") return;
+      if (event.data.ok === true && typeof event.data.orderId === "string") {
+        finish(resolve, { ok: true, orderId: event.data.orderId });
+      } else if (event.data.ok === false) {
+        finish(reject, new Error(event.data.message || "Order could not be saved"));
+      }
+    };
+    const timeoutId = window.setTimeout(() => {
+      finish(reject, new Error("Google Apps Script did not respond in time"));
+    }, 30000);
+
+    activeOrderRequest = { cleanup };
+    window.addEventListener("message", onMessage);
+    document.body.append(iframe, form);
+    form.submit();
+  });
+}
+
 orderForm.addEventListener("input", clearError);
 orderForm.addEventListener("change", clearError);
 
@@ -132,15 +189,7 @@ orderForm.addEventListener("submit", async (event) => {
   submitButton.classList.add("is-loading");
   submitButton.textContent = "ENVOI EN COURS…";
   try {
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const result = await response.json().catch(() => ({}));
-    if (response.status !== 200 || result.ok !== true || typeof result.orderId !== "string") {
-      throw new Error("Order could not be saved");
-    }
+    const result = await submitOrderToAppsScript(payload);
 
     const orderReference = result.orderId.slice(0, 8).toUpperCase();
     successCopy.textContent = `Merci ${firstName} ${lastName}. Votre commande #${orderReference} pour le Dark Indigo Baggy Jeans (taille ${selectedSize}, 250 DH), à livrer à ${city}, est enregistrée.`;
