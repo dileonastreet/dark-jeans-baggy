@@ -183,7 +183,6 @@ orderForm.addEventListener("submit", async (event) => {
     address: String(formData.get("address")).trim(),
     city,
     size: selectedSize,
-    website: String(formData.get("website") || "").trim(),
   };
 
   submitButton.disabled = true;
