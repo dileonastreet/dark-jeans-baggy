@@ -29,7 +29,7 @@ button { color: inherit; }
 .icon-button { appearance: none; border: 0; background: transparent; padding: 9px; cursor: pointer; display: grid; place-items: center; }
 .hamburger { display: grid; width: 15px; gap: 3px; }
 .hamburger i { height: 1px; width: 100%; background: #f1f0ed; display: block; }
-.wordmark { position: relative; display: inline-block; padding-bottom: 5px; color: #f3f1ed; font: 400 clamp(34px, 3.6vw, 48px)/.94 "Anton", Impact, sans-serif; letter-spacing: -.025em; white-space: nowrap; text-shadow: 2px 2px 0 rgba(80, 96, 137, .45); }
+.wordmark { position: absolute; left: 50%; top: 50%; z-index: 1; transform: translate(-50%, -50%); display: inline-block; padding-bottom: 5px; color: #f3f1ed; font: 400 clamp(34px, 3.6vw, 48px)/.94 "Anton", Impact, sans-serif; letter-spacing: -.025em; white-space: nowrap; text-shadow: 2px 2px 0 rgba(80, 96, 137, .45); }
 .wordmark::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: linear-gradient(90deg, #657292 0 32%, transparent 32%); }
 .cart-dot { width: 7px; height: 7px; border: 1px solid currentColor; border-radius: 50%; display: inline-block; vertical-align: 0; margin-left: 3px; }
 .menu-panel { position: absolute; left: 12px; top: calc(100% + 10px); width: 225px; padding: 20px; border: 1px solid var(--line); background: #171819; border-radius: 16px; box-shadow: 0 18px 50px #0008; }
