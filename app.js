@@ -58,7 +58,7 @@ function openModal() {
   modal.hidden = false;
   document.body.classList.add("modal-open");
   if (typeof window.fbq === "function") {
-    window.fbq("track", "InitiateCheckout", {content_name: "Dark Indigo Baggy Jeans", content_type: "product", value: 250, currency: "MAD"});
+    window.fbq("track", "InitiateCheckout", {content_name: "Dark Indigo Baggy Jeans", content_type: "product", value: 220, currency: "MAD"});
   }
   orderForm.querySelector('[name="lastName"]').focus();
 }
@@ -195,10 +195,10 @@ orderForm.addEventListener("submit", async (event) => {
     const result = await submitOrderToAppsScript(payload);
 
     if (typeof window.fbq === "function") {
-      window.fbq("track", "Purchase", {content_name: "Dark Indigo Baggy Jeans", content_type: "product", value: 250, currency: "MAD"});
+      window.fbq("track", "Purchase", {content_name: "Dark Indigo Baggy Jeans", content_type: "product", value: 220, currency: "MAD"});
     }
     const orderReference = result.orderId.slice(0, 8).toUpperCase();
-    successCopy.textContent = `Merci ${firstName} ${lastName}. Votre commande #${orderReference} pour le Dark Indigo Baggy Jeans (taille ${selectedSize}, 250 DH), à livrer à ${city}, est enregistrée.`;
+    successCopy.textContent = `Merci ${firstName} ${lastName}. Votre commande #${orderReference} pour le Dark Indigo Baggy Jeans (taille ${selectedSize}, 220 DH), à livrer à ${city}, est enregistrée.`;
     orderForm.hidden = true;
     successMessage.hidden = false;
   } catch {

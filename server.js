@@ -116,7 +116,7 @@ function buildOrder(body) {
     city,
     size,
     product: "Dark Indigo Baggy Jeans",
-    price: 250,
+    price: 220,
     status: "Nouvelle commande",
     notes: "",
   };
